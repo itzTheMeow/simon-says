@@ -1,15 +1,13 @@
 {
-  "name": "my-bot",
-  "version": "0.0.1",
-  "description": "A simple discord bot with a command handler.",
+  "name": "simon-says-bot",
+  "version": "0.1.0",
+  "description": "A Simon Says bot. By Meow",
   "main": "bot.js",
   "scripts": {
     "start": "node bot.js"
   },
   "dependencies": {
-    "discord.js": "^11.5.1",
-    "express": "^4.16.4",
-    "fs": "^0.0.2"
+    "discord.js": "^11.5.1"
   },
   "engines": {
     "node": "8.x"
