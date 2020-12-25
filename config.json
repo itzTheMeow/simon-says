@@ -1,3 +1,15 @@
 {
-  "prefix":"?"
+  "prefix": "?",
+  "guild": "",
+  "roles": {
+    "admin": "",
+    "simon": "",
+    "bot": "",
+    "playing": "",
+    "disqualified": ""
+  },
+  "channels": {
+    "gameplay": "",
+    "lobby": ""
+  }
 }

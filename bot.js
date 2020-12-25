@@ -5,6 +5,7 @@ const fs = require("fs");
 
 const config = require("./config.json");
 bot.prefix = config.prefix;
+bot.config = config;
 /* set config data */
 
 bot.commands = new Discord.Collection();
@@ -36,21 +37,9 @@ fs.readdir("./cmds/", (err, files) => {
 
 bot.on("ready", () => {
   console.log(`Bot ${bot.user.username} is on!`);
-  bot.user.setActivity("Simon Says", { type: "PLAYING" });
-  bot.user.setStatus("online", null);
+  bot.user.setPresence({ activity: { name: "Simon Says", type: "PLAYING" } });
 
-  bot.guild = bot.guilds.get("601190120749793290");
-  bot.rolez = {
-    admin: "601227042314518528",
-    simon: "601192111148367903",
-    bot: "601208267204722719",
-    playing: "601190491886977034",
-    disqualified: "601190513806278666",
-  };
-  bot.channelz = {
-    gameplay: bot.channels.get("601190440959606804"),
-    lobby: bot.channels.get("601190459993358337"),
-  };
+  bot.guild = bot.guilds.get(bot.config.guild);
 });
 
 bot.on("message", (message) => {
