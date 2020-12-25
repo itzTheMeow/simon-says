@@ -17,51 +17,48 @@ bot.commandRequirements = new Object();
 fs.readdir("./cmds/", (err, files) => {
   if (err) throw err;
 
-  let jsFiles = files.filter(f => f.split(".").pop() === "js");
+  let jsFiles = files.filter((f) => f.split(".").pop() === "js");
 
-  jsFiles.forEach(f => {
+  jsFiles.forEach((f) => {
     let props = require(`./cmds/${f}`);
     bot.commands.set(props.help.name, props);
     bot.commandDescriptions[props.help.name] = props.help.description;
-    bot.commandUsages[props.help.name] =
-      "`" + bot.prefix + props.help.usage + "`";
+    bot.commandUsages[props.help.name] = "`" + bot.prefix + props.help.usage + "`";
     if (props.help.commandAliases.length >= 1)
       bot.commandAliases.push({
         for: props.help.name,
-        aliases: props.help.commandAliases
+        aliases: props.help.commandAliases,
       });
   });
   console.log(`Loaded ${jsFiles.length} commands!`);
 });
+/* load commands */
 
 bot.on("ready", () => {
   console.log(`Bot ${bot.user.username} is on!`);
   bot.user.setActivity("Simon Says", { type: "PLAYING" });
   bot.user.setStatus("online", null);
 
-  bot.guild = bot.guilds.get('601190120749793290')
+  bot.guild = bot.guilds.get("601190120749793290");
   bot.rolez = {
     admin: "601227042314518528",
     simon: "601192111148367903",
     bot: "601208267204722719",
     playing: "601190491886977034",
-    disqualified: "601190513806278666"
+    disqualified: "601190513806278666",
   };
   bot.channelz = {
     gameplay: bot.channels.get("601190440959606804"),
-    lobby: bot.channels.get("601190459993358337")
+    lobby: bot.channels.get("601190459993358337"),
   };
 });
 
-bot.on("message", message => {
+bot.on("message", (message) => {
   if (message.author.bot) return;
   /*  ignore bots */
   if (message.content.startsWith(bot.prefix)) {
     /* if starts with prefix (tcc ) */
-    let args = message.content
-      .substring(bot.prefix.length)
-      .trim()
-      .split(/ +/g);
+    let args = message.content.substring(bot.prefix.length).trim().split(/ +/g);
     /* get args */
 
     let cmd = bot.commands.get(args[0].toLowerCase());
@@ -71,7 +68,7 @@ bot.on("message", message => {
       let name;
       /* declare name variable */
 
-      bot.commandAliases.forEach(a => {
+      bot.commandAliases.forEach((a) => {
         if (a.aliases.includes(args[0].toLowerCase())) name = a.for;
         /* see if the command used is an alias of another one */
       });
@@ -79,7 +76,7 @@ bot.on("message", message => {
       cmd = bot.commands.get(name);
       /* get the command using the name */
     }
-    if (!cmd) return
+    if (!cmd) return;
     /* command not found message */
 
     cmd.run(bot, message, args);
@@ -87,10 +84,10 @@ bot.on("message", message => {
   }
 });
 
-bot.on('guildMemberAdd', member => {
-  if(member.guild.id !== bot.guild.id) return
-  member.addRole(bot.rolez.disqualified)
-  bot.channelz.lobby.send("YEET, " + member + " is playing!")
-})
+bot.on("guildMemberAdd", (member) => {
+  if (member.guild.id !== bot.guild.id) return;
+  member.addRole(bot.rolez.disqualified);
+  bot.channelz.lobby.send("YEET, " + member + " is playing!");
+});
 
 bot.login(process.env.TOKEN);
