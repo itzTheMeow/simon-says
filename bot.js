@@ -44,18 +44,15 @@ bot.on("ready", () => {
 
 bot.on("message", (message) => {
   if (message.author.bot) return;
-  /*  ignore bots */
+
   if (message.content.startsWith(bot.prefix)) {
-    /* if starts with prefix (tcc ) */
+    /* if starts with prefix */
     let args = message.content.substring(bot.prefix.length).trim().split(/ +/g);
-    /* get args */
 
     let cmd = bot.commands.get(args[0].toLowerCase());
-    /* fetch command */
 
     if (!cmd) {
       let name;
-      /* declare name variable */
 
       bot.commandAliases.forEach((a) => {
         if (a.aliases.includes(args[0].toLowerCase())) name = a.for;
@@ -66,10 +63,8 @@ bot.on("message", (message) => {
       /* get the command using the name */
     }
     if (!cmd) return;
-    /* command not found message */
 
     cmd.run(bot, message, args);
-    /* run the command */
   }
 });
 
