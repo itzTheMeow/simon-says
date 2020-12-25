@@ -6,7 +6,6 @@ const fs = require("fs");
 const config = require("./config.json");
 bot.prefix = config.prefix;
 bot.config = config;
-/* set config data */
 
 bot.commands = new Discord.Collection();
 bot.commandDescriptions = new Object();
