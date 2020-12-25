@@ -1,17 +1,3 @@
-const http = require("http");
-const express = require("express");
-const app = express();
-app.use(express.static("site"));
-app.get("/", (request, response) => {
-  console.log(Date.now() + " ping received!");
-  response.sendStatus(200);
-});
-app.listen(process.env.PORT);
-setInterval(() => {
-  http.get(`http://${process.env.PROJECT_DOMAIN}.glitch.me/`);
-}, 280000);
-/* create HTTP server (for keeping the bot online with uptimerobot) */
-
 const Discord = require("discord.js");
 const bot = new Discord.Client();
 const fs = require("fs");
