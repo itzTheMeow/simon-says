@@ -75,8 +75,8 @@ bot.on("message", (message) => {
 
 bot.on("guildMemberAdd", (member) => {
   if (member.guild.id !== bot.guild.id) return;
-  member.addRole(bot.rolez.disqualified);
-  bot.channelz.lobby.send("YEET, " + member + " is playing!");
+  member.roles.add(bot.config.roles.disqualified);
+  bot.guild.channels.get(bot.config.channels.lobby).send("YEET, " + member + " is playing!");
 });
 
 bot.login(bot.config.token);
