@@ -2,8 +2,8 @@ const Discord = module.require("discord.js");
 
 module.exports.run = async (bot, message, args) => {
   if (
-    !message.member.roles.has(bot.rolez.admin) &&
-    !message.member.roles.has(bot.rolez.simon)
+    !message.member.roles.cache.has(bot.config.roles.admin) &&
+    !message.member.roles.cache.has(bot.config.roles.simon)
   )
     return;
 
@@ -18,7 +18,9 @@ module.exports.run = async (bot, message, args) => {
         options.before = last_id;
       }
 
-      const messages = await bot.channelz.gameplay.fetchMessages(options);
+      const messages = await bot.guild.channels.cache
+        .get(bot.config.channels.gameplay)
+        .fetchMessages(options);
       if (!messages.last()) {
         resolve(sum_messages);
         break;
@@ -32,24 +34,24 @@ module.exports.run = async (bot, message, args) => {
       }
     }
   });
-  pr.then(msgs => {
-    msgs.forEach(m => {
+  pr.then((msgs) => {
+    msgs.forEach((m) => {
       m.delete();
     });
   });
 
-  bot.guild.members.forEach(m => {
-    if (m.roles.has(bot.rolez.bot) || m.roles.has(bot.rolez.simon)) return;
-    m.addRole(bot.rolez.disqualified);
-    m.removeRole(bot.rolez.playing);
+  bot.guild.members.forEach((m) => {
+    if (m.roles.has(bot.config.roles.bot) || m.roles.has(bot.config.roles.simon)) return;
+    m.roles.add(bot.config.roles.disqualified);
+    m.roles.add(bot.config.roles.playing);
     m.setNickname(m.user.username);
   });
 
-  bot.channelz.lobby.send("The game is over!");
+  bot.guild.channels.cache.get(bot.config.channels.lobby).send("The game is over!");
 };
 module.exports.help = {
   name: "stop",
   description: "Stop the game.",
   usage: "stop",
-  commandAliases: ["end"]
+  commandAliases: ["end"],
 };

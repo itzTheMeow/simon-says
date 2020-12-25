@@ -7,5 +7,5 @@ module.exports.help = {
   name: "ping",
   description: "Replies to you",
   usage: "ping",
-  commandAliases: []
+  commandAliases: [],
 };
