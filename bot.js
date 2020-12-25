@@ -79,4 +79,4 @@ bot.on("guildMemberAdd", (member) => {
   bot.channelz.lobby.send("YEET, " + member + " is playing!");
 });
 
-bot.login(process.env.TOKEN);
+bot.login(bot.config.token);
