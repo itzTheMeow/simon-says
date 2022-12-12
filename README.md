@@ -1,3 +1,5 @@
+*This project is abandoned.*
+
 # Simon Says
 
 This is a simple Simon Says bot that i rewrote a few months ago.<br>
